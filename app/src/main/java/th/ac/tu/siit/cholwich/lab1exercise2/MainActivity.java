@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -36,4 +40,63 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void Convert(View v)
+    {
+        EditText et = (EditText)findViewById(R.id.etInput);
+        String s = et.getText().toString();
+
+        Double temp = Double.parseDouble(s);
+
+        RadioGroup from = (RadioGroup)findViewById(R.id.rgFrom);
+        int selfrom = from.getCheckedRadioButtonId();
+
+        RadioGroup to = (RadioGroup)findViewById(R.id.rgTo);
+        int selto = to.getCheckedRadioButtonId();
+
+        if(selfrom == R.id.rbFrmC)
+        {
+            if(selto == R.id.rbToF)
+            {
+               temp = (temp*9/5)+32;
+            }
+
+            if(selto == R.id.rbToK)
+            {
+                temp = temp+273.15;
+            }
+        }
+
+        if(selfrom == R.id.rbFrmF)
+        {
+            if(selto == R.id.rbToC)
+            {
+                temp = (temp-32)*5/9;
+            }
+
+            if(selto == R.id.rbToK)
+            {
+                temp = (temp+459.67)*5/9;
+            }
+        }
+
+        if(selfrom == R.id.rbFrmK)
+        {
+            if(selto == R.id.rbToC)
+            {
+                temp = temp - 273.15;
+            }
+
+            if(selto == R.id.rbToF)
+            {
+                temp = (temp*9/5)-459.67;
+            }
+        }
+
+        TextView out = (TextView)findViewById(R.id.tvOutput);
+        String outtext = String.format("%.2f",temp);
+        out.setText(outtext);
+    }
+
+
 }
